@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual SP-404 Sampler</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="sp-404">
+
+    <div class="control-panel">
+        <div class="knobs">
+            <div class="knob">VOL</div>
+            <div class="knob">CTRL 1</div>
+            <div class="knob">CTRL 2</div>
+            <div class="knob">CTRL 3</div>
+        </div>
+    </div>
+
+
+    <div class="combined-controls">
+
+        <div class="left-button-group">
+            <button class="control-button">FILTER+DRIVE</button>
+            <button class="control-button">PITCH</button>
+            <button class="control-button">DELAY</button>
+        </div>
+        <!-- Screen -->
+        <div class="screen">138.8</div>
+
+        <div class="right-button-group">
+            <button class="control-button">ISOLATOR</button>
+            <button class="control-button">VINYL SIM</button>
+            <button class="control-button">MFX</button>
+        </div>
+
+
+        <!-- Right side controls for pattern sequencer and sample edit -->
+        <div class="right-side-controls">
+            <!-- Pattern Sequencer Area -->
+            <div class="pattern-sequencer-area">
+                <button class="pattern-sequencer-button">PATTERN SELECT</button>
+                <button class="pattern-sequencer-button">LENGTH</button>
+                <button class="pattern-sequencer-button">QUANTIZE</button>
+                <!-- Pattern sequencer buttons -->
+            </div>
+            
+            <!-- Sample Edit Area -->
+            <div class="sample-edit-area">
+
+                <button class="sample-edit-button">START/END/LEVEL</button>
+                <button class="sample-edit-button">TIME/BPM</button>
+
+
+            <div class="sample-mode-area">
+                <button class="sample-mode-button">LO-FI</button>
+                <button class="sample-mode-button">STEREO</button>
+                <button class="sample-mode-button">GATE</button>
+                <button class="sample-mode-button">LOOP</button>
+                <button class="sample-mode-button">REVERSE</button>
+            </div>
+            
+                <!-- Sample edit buttons -->
+
+                <!-- Bank buttons -->
+            <div class="bank-buttons">
+                    <button class="bank">A</button>
+                    <button class="bank">B</button>
+                    <button class="bank">C/G</button>
+                    <button class="bank">D/H</button>
+                    <button class="bank">E/I</button>
+                    <button class="bank">F/J</button>
+                    <!-- ... other bank buttons ... -->
+            </div>
+        </div>
+        
+            
+        </div>
+    </div>
+
+
+   
+   
+   
+   
+   
+    <div class="sampling">
+        <!-- Sample mode buttons -->
+        <button class="control-button">DEL</button>
+        <button class="control-button">REC</button>
+        <button class="control-button">RESAMPLE</button>
+        
+    </div>
+
+    <div class="sampling">
+        <!-- Sample mode buttons -->
+        <button class="control-button">CANCEL</button>
+        <button class="control-button">REMAIN</button>
+        <button class="control-button">MARK</button>
+        
+    </div>
+
+    <!-- Pads and function buttons -->
+    <div class="pads-and-functions">
+        
+        
+        
+        <div class="pad-section">
+            <div class="pad-row">
+                <button class="pad" data-pad="1" onclick="playOrUploadSound(1)">1</button>
+                <button class="pad" data-pad="2" onclick="playOrUploadSound(2)">2</button>
+                <button class="pad">3</button>
+                <button class="pad">4</button>
+                <button class="pad">HOLD</button>
+            </div>
+            <div class="pad-row">
+                <button class="pad">5</button>
+                <button class="pad">6</button>
+                <button class="pad">7</button>
+                <button class="pad">8</button>
+                <button class="pad">EXIT SRC</button>
+            </div>
+            <div class="pad-row">
+                <button class="pad">9</button>
+                <button class="pad">10</button>
+                <button class="pad">11</button>
+                <button class="pad">12</button>
+                <button class="pad">SUB PAD</button>
+            </div>
+            <!-- Repeat for other pad rows -->
+        </div>
+        
+    </div>
+    
+    <!-- ... Other sections for sample, effects, etc. ... -->
+</div>
+
+<input type="file" id="upload-pad1" accept="audio/*" style="display:none;" onchange="loadSound(1, this.files)">
+<input type="file" id="upload-pad2" accept="audio/*" style="display:none;" onchange="loadSound(2, this.files)">
+
+
+<script src="script.js"></script>
+</body>
+</html>

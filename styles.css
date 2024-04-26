@@ -1,0 +1,173 @@
+#sp-404 {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 800px;
+    background-color: #d3d3d3;
+    position: relative;
+    margin: auto; /* Center the SP-404 in the page */
+    border: 1px solid #999;
+    border-radius: 4px;
+}
+
+.control-panel {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.knobs {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+   
+}
+
+.knob {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: #333;
+    margin-bottom: 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2 6px;
+    font-size: 12px;
+}
+
+.screen {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    background-color: #000;
+    color: rgb(84, 5, 243);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+    /* Centering the screen*/
+    align-self: center;
+    border-radius: 50%; 
+}
+
+.left-button-group, .right-button-group {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;  /* Center vertically relative to the parent */
+    transform: translateY(-50%);  /* Aligns the center of the buttons with the center of the screen */
+}
+
+.left-button-group {
+    left: calc(50% - 200px);  /* Adjust as needed */
+}
+
+.right-button-group {
+    right: calc(54% - 200px);  /* Adjust as needed */
+}
+/* ... existing styles ... */
+
+/* Add styles for the new .combined-controls wrapper */
+.combined-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* This will center the screen horizontally */
+    position: relative; /* Context for absolute positioning of children */
+}
+
+/* Right-side controls container */
+.right-side-controls {
+    display: flex;
+    flex-direction: row; /* Now lays out children in a row */
+    justify-content: center; /* Center children horizontally */
+    align-items: flex-end; /* Align children to the bottom */
+    position: absolute; /* Will position the whole container absolutely relative to .combined-controls */
+    bottom: 0; /* Align to the bottom of .combined-controls */
+    width: 100%; /* Take up the full width to allow space for positioning children */
+}
+
+/* Styles for pattern sequencer and sample edit areas */
+.pattern-sequencer-area,
+.sample-edit-area {
+    position: absolute; /* Absolute positioning within their parent .right-side-controls */
+    bottom: -50px; /* Adjust as needed to place below the screen */
+}
+
+.pattern-sequencer-area {
+    left: 46%; /* Start at the horizontal center */
+    transform: translateX(-100%); /* Adjust as needed */
+    margin-bottom: 60px;
+    /* This will move the pattern sequencer area to the left of the center */
+}
+
+.sample-edit-area {
+    left: 60%; /* Align the left edge with the center of .right-side-controls */
+    /* This will position the sample edit area to the right of the center */
+}
+
+/* Style for the sample-pattern-section */
+.sample-pattern-section {
+    display: flex;
+    justify-content: center; /* Center these buttons horizontally */
+    padding: 10px;
+}
+
+.control-button.sample-pattern {
+    /* Styles for the sample/pattern buttons */
+    margin: 0 5px; /* Space between the buttons */
+}
+
+
+
+
+.pads-and-functions {
+    display: flex;
+}
+
+.pad-section {
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.pad-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.pad {
+    width: 100px;
+    height: 100px;
+    background-color: #999;
+}
+
+.function-section {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.function, .bank {
+    margin: 0 5px;
+}
+
+.bank {
+    margin: 0 5px;
+}
+.bank-buttons {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+/* Add additional styling for other buttons and elements... */
+
+.pad.playing {
+    background-color: #f00;
+}
+
