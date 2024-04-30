@@ -10,13 +10,14 @@
 <div id="sp-404">
 
     <div class="control-panel">
-        <div class="knobs">
-            <div class="knob">VOL</div>
+        <div class="knob" id="volume-knob">
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" oninput="setVolume(this.value)" title="Volume">
+            </div>
             <div class="knob">CTRL 1</div>
             <div class="knob">CTRL 2</div>
             <div class="knob">CTRL 3</div>
         </div>
-    </div>
+    
 
 
     <div class="combined-controls">
@@ -31,7 +32,9 @@
 
         <div class="right-button-group">
             <button class="control-button">ISOLATOR</button>
-            <button class="control-button">VINYL SIM</button>
+            
+            <button id="vinyl-sim-button" onclick="toggleVinylSimulationForAllPads()">Vinyl Sim</button>
+
             <button class="control-button">MFX</button>
         </div>
 
@@ -103,38 +106,36 @@
 
     <!-- Pads and function buttons -->
     <div class="pads-and-functions">
-        
-        
-        
         <div class="pad-section">
             <div class="pad-row">
-                <button class="pad" data-pad="1" onclick="playOrUploadSound(1)">1</button>
-                <button class="pad" data-pad="2" onclick="playOrUploadSound(2)">2</button>
-                <button class="pad">3</button>
-                <button class="pad">4</button>
-                <button class="pad">HOLD</button>
+                <div class="pad" data-pad="1" ondrop="dropHandler(event, 1)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(1)">1</div>
+                <div class="pad" data-pad="2" ondrop="dropHandler(event, 2)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(2)">2</div>
+                <div class="pad" data-pad="3" ondrop="dropHandler(event, 3)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(3)">3</div>
+                <div class="pad" data-pad="4" ondrop="dropHandler(event, 4)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(4)">4</div>
+                <div class="pad special" data-pad="hold" ondrop="dropHandler(event, 'hold')" ondragover="dragOverHandler(event)" onclick="playOrUploadSound('hold')">HOLD</div>
             </div>
             <div class="pad-row">
-                <button class="pad">5</button>
-                <button class="pad">6</button>
-                <button class="pad">7</button>
-                <button class="pad">8</button>
-                <button class="pad">EXIT SRC</button>
+                <div class="pad" data-pad="5" ondrop="dropHandler(event, 5)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(5)">5</div>
+                <div class="pad" data-pad="6" ondrop="dropHandler(event, 6)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(6)">6</div>
+                <div class="pad" data-pad="7" ondrop="dropHandler(event, 7)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(7)">7</div>
+                <div class="pad" data-pad="8" ondrop="dropHandler(event, 8)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(8)">8</div>
+                <div class="pad special" data-pad="exit-src" ondrop="dropHandler(event, 'exit-src')" ondragover="dragOverHandler(event)" onclick="playOrUploadSound('exit-src')">EXIT SRC</div>
             </div>
             <div class="pad-row">
-                <button class="pad">9</button>
-                <button class="pad">10</button>
-                <button class="pad">11</button>
-                <button class="pad">12</button>
-                <button class="pad">SUB PAD</button>
+                <div class="pad" data-pad="9" ondrop="dropHandler(event, 9)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(9)">9</div>
+                <div class="pad" data-pad="10" ondrop="dropHandler(event, 10)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(10)">10</div>
+                <div class="pad" data-pad="11" ondrop="dropHandler(event, 11)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(11)">11</div>
+                <div class="pad" data-pad="12" ondrop="dropHandler(event, 12)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(12)">12</div>
+                <div class="pad special" data-pad="sub-pad" ondrop="dropHandler(event, 'sub-pad')" ondragover="dragOverHandler(event)" onclick="playOrUploadSound('sub-pad')">SUB PAD</div>
             </div>
-            <!-- Repeat for other pad rows -->
         </div>
-        
     </div>
     
+    
     <!-- ... Other sections for sample, effects, etc. ... -->
+    </div>
 </div>
+
 
 <input type="file" id="upload-pad1" accept="audio/*" style="display:none;" onchange="loadSound(1, this.files)">
 <input type="file" id="upload-pad2" accept="audio/*" style="display:none;" onchange="loadSound(2, this.files)">
