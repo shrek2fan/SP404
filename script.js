@@ -1,9 +1,12 @@
 // Global AudioContext
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-audioCtx.audioWorklet.addModule('path/to/vinyl-processor.js').then(() => {
-    // You can now create instances of AudioWorkletNode using 'vinyl-processor'.
-  });
+audioCtx.audioWorklet.addModule('vinyl-processor.js').then(() => {
+    console.log('Vinyl processor module loaded successfully.');
+}).catch(e => {
+    console.error('Error loading vinyl processor module:', e);
+});
+
   
 // Object to keep track of the sounds for the pads
 var padSounds = {};
@@ -132,5 +135,9 @@ function toggleVinylSimulation(padNumber) {
 }
 
 
-// Ensure the vinyl-sim-button toggles the effect for all pads
-document.getElementById('vinyl-sim-button').addEventListener('click', toggleVinylSimulationForAllPads);
+function toggleVinylSimulationForAllPads() {
+    Object.keys(padSounds).forEach(padNumber => {
+      toggleVinylSimulation(padNumber);
+    });
+  }
+  
