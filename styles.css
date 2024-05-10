@@ -132,7 +132,7 @@
 .pattern-sequencer-area,
 .sample-edit-area {
     position: absolute; /* Absolute positioning within their parent .right-side-controls */
-    bottom: -50px; /* Adjust as needed to place below the screen */
+    bottom: 440px; /* Adjust as needed to place below the screen */
 }
 
 .pattern-sequencer-area {
@@ -168,7 +168,7 @@
 
 .pad-section {
     flex-grow: 1;
-    padding: 10px;
+    padding-top: 80px;
 }
 
 .pad-row {

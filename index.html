@@ -1,146 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Virtual SP-404 Sampler</title>
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-<div id="sp-404">
-
-    <div class="control-panel">
-        <div class="knob" id="volume-knob">
-                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" oninput="setVolume(this.value)" title="Volume">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Virtual SP-404 Sampler</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <!-- Main interaction buttons -->
+        <button id="startAudio">Start Audio</button>
+        <button id="enableKeyboardButton">Enable Keyboard</button>
+    
+        <!-- SP-404 Sampler Controls -->
+        <div id="sp-404">
+            <!-- Volume and Pitch Controls -->
+            <div class="control-panel">
+                <div class="knob" id="volume-knob">
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" oninput="setVolume(this.value)" title="Volume">
+                </div>
+                <div class="knob" id="pitch-knob">
+                    <input type="range" min="0.5" max="2" step="0.01" value="1" oninput="adjustPitch(this.value)" title="Pitch">
+                </div>
+                <div class="knob">CTRL 2</div>
+                <div class="knob">CTRL 3</div>
             </div>
-            <div class="knob">CTRL 1</div>
-            <div class="knob">CTRL 2</div>
-            <div class="knob">CTRL 3</div>
+    
+            <!-- Control Buttons -->
+            <div class="combined-controls">
+                <div class="left-button-group">
+                    <button class="control-button">FILTER+DRIVE</button>
+                    <button id="pitch-button" class="control-button">PITCH</button>
+                    <button class="control-button">DELAY</button>
+                </div>
+    
+                <div class="screen" id="bpmScreen">
+                    <div id="bpmValue"></div>
+                </div>
+    
+                <div class="right-button-group">
+                    <button class="control-button">ISOLATOR</button>
+                    <button id="vinyl-sim-button" onclick="toggleVinylSimulationForAllPads()">Vinyl Sim</button>
+                    <button class="control-button">MFX</button>
+                </div>
+            </div>
+    
+            <!-- Sequencer and Sample Edit Controls -->
+            <div class="right-side-controls">
+                <div class="pattern-sequencer-area">
+                    <button class="pattern-sequencer-button">PATTERN SELECT</button>
+                    <button class="pattern-sequencer-button">LENGTH</button>
+                    <button class="pattern-sequencer-button">QUANTIZE</button>
+                </div>
+    
+                <div class="sample-edit-area">
+                    <button class="sample-edit-button">START/END/LEVEL</button>
+                    <button class="sample-edit-button">TIME/BPM</button>
+    
+                    <div class="sample-mode-area">
+                        <button class="sample-mode-button">LO-FI</button>
+                        <button class="sample-mode-button">STEREO</button>
+                        <button class="sample-mode-button">GATE</button>
+                        <button class="sample-mode-button">LOOP</button>
+                        <button class="sample-mode-button">REVERSE</button>
+                    </div>
+    
+                    <div class="bank-buttons">
+                        <button class="bank">A</button>
+                        <button class="bank">B</button>
+                        <button class="bank">C/G</button>
+                        <button class="bank">D/H</button>
+                        <button class="bank">E/I</button>
+                        <button class="bank">F/J</button>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Pads for Sample Triggering -->
+            <div class="pads-and-functions">
+                <div class="pad-section">
+                    <div class="pad-row">
+                        <div class="pad" data-pad="1" ondrop="dropHandler(event, 1)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(1)">1</div>
+                        <div class="pad" data-pad="2" ondrop="dropHandler(event, 2)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(2)">2</div>
+                        <div class="pad" data-pad="3" ondrop="dropHandler(event, 3)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(3)">3</div>
+                        <div class="pad" data-pad="4" ondrop="dropHandler(event, 4)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(4)">4</div>
+                        <div class="pad special" data-pad="hold" ondrop="dropHandler(event, 'hold')" ondragover="dragOverHandler(event)" onclick="playOrUploadSound('hold')">HOLD</div>
+                    </div>
+                    <div class="pad-row">
+                        <div class="pad" data-pad="5" ondrop="dropHandler(event, 5)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(5)">5</div>
+                        <div class="pad" data-pad="6" ondrop="dropHandler(event, 6)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(6)">6</div>
+                        <div class="pad" data-pad="7" ondrop="dropHandler(event, 7)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(7)">7</div>
+                        <div class="pad" data-pad="8" ondrop="dropHandler(event, 8)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(8)">8</div>
+                        <div class="pad special" data-pad="exit-src" ondrop="dropHandler(event, 'exit-src')" ondragover="dragOverHandler(event)" onclick="playOrUploadSound('exit-src')">EXIT SRC</div>
+                    </div>
+                    <div class="pad-row">
+                        <div class="pad" data-pad="9" ondrop="dropHandler(event, 9)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(9)">9</div>
+                        <div class="pad" data-pad="10" ondrop="dropHandler(event, 10)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(10)">10</div>
+                        <div class="pad" data-pad="11" ondrop="dropHandler(event, 11)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(11)">11</div>
+                        <div class="pad" data-pad="12" ondrop="dropHandler(event, 12)" ondragOver="dragOverHandler(event)" onclick="playOrUploadSound(12)">12</div>
+                        <div class="pad special" data-pad="sub-pad" ondrop="dropHandler(event, 'sub-pad')" ondragover="dragOverHandler(event)" onclick="playOrUploadSound('sub-pad')">SUB PAD</div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Hidden inputs for file uploads -->
+            <input type="file" id="upload-pad1" accept="audio/*" style="display:none;" onchange="loadSound(1, this.files)">
+            <input type="file" id="upload-pad2" accept="audio/*" style="display:none;" onchange="loadSound(2, this.files)">
         </div>
     
-
-
-    <div class="combined-controls">
-
-        <div class="left-button-group">
-            <button class="control-button">FILTER+DRIVE</button>
-            <button class="control-button">PITCH</button>
-            <button class="control-button">DELAY</button>
-        </div>
-        <!-- Screen -->
-        <div class="screen">138.8</div>
-
-        <div class="right-button-group">
-            <button class="control-button">ISOLATOR</button>
-            
-            <button id="vinyl-sim-button" onclick="toggleVinylSimulationForAllPads()">Vinyl Sim</button>
-
-            <button class="control-button">MFX</button>
-        </div>
-
-
-        <!-- Right side controls for pattern sequencer and sample edit -->
-        <div class="right-side-controls">
-            <!-- Pattern Sequencer Area -->
-            <div class="pattern-sequencer-area">
-                <button class="pattern-sequencer-button">PATTERN SELECT</button>
-                <button class="pattern-sequencer-button">LENGTH</button>
-                <button class="pattern-sequencer-button">QUANTIZE</button>
-                <!-- Pattern sequencer buttons -->
-            </div>
-            
-            <!-- Sample Edit Area -->
-            <div class="sample-edit-area">
-
-                <button class="sample-edit-button">START/END/LEVEL</button>
-                <button class="sample-edit-button">TIME/BPM</button>
-
-
-            <div class="sample-mode-area">
-                <button class="sample-mode-button">LO-FI</button>
-                <button class="sample-mode-button">STEREO</button>
-                <button class="sample-mode-button">GATE</button>
-                <button class="sample-mode-button">LOOP</button>
-                <button class="sample-mode-button">REVERSE</button>
-            </div>
-            
-                <!-- Sample edit buttons -->
-
-                <!-- Bank buttons -->
-            <div class="bank-buttons">
-                    <button class="bank">A</button>
-                    <button class="bank">B</button>
-                    <button class="bank">C/G</button>
-                    <button class="bank">D/H</button>
-                    <button class="bank">E/I</button>
-                    <button class="bank">F/J</button>
-                    <!-- ... other bank buttons ... -->
-            </div>
-        </div>
-        
-            
-        </div>
-    </div>
-
-
-   
-   
-   
-   
-   
-    <div class="sampling">
-        <!-- Sample mode buttons -->
-        <button class="control-button">DEL</button>
-        <button class="control-button">REC</button>
-        <button class="control-button">RESAMPLE</button>
-        
-    </div>
-
-    <div class="sampling">
-        <!-- Sample mode buttons -->
-        <button class="control-button">CANCEL</button>
-        <button class="control-button">REMAIN</button>
-        <button class="control-button">MARK</button>
-        
-    </div>
-
-    <!-- Pads and function buttons -->
-    <div class="pads-and-functions">
-        <div class="pad-section">
-            <div class="pad-row">
-                <div class="pad" data-pad="1" ondrop="dropHandler(event, 1)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(1)">1</div>
-                <div class="pad" data-pad="2" ondrop="dropHandler(event, 2)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(2)">2</div>
-                <div class="pad" data-pad="3" ondrop="dropHandler(event, 3)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(3)">3</div>
-                <div class="pad" data-pad="4" ondrop="dropHandler(event, 4)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(4)">4</div>
-                <div class="pad special" data-pad="hold" ondrop="dropHandler(event, 'hold')" ondragover="dragOverHandler(event)" onclick="playOrUploadSound('hold')">HOLD</div>
-            </div>
-            <div class="pad-row">
-                <div class="pad" data-pad="5" ondrop="dropHandler(event, 5)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(5)">5</div>
-                <div class="pad" data-pad="6" ondrop="dropHandler(event, 6)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(6)">6</div>
-                <div class="pad" data-pad="7" ondrop="dropHandler(event, 7)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(7)">7</div>
-                <div class="pad" data-pad="8" ondrop="dropHandler(event, 8)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(8)">8</div>
-                <div class="pad special" data-pad="exit-src" ondrop="dropHandler(event, 'exit-src')" ondragover="dragOverHandler(event)" onclick="playOrUploadSound('exit-src')">EXIT SRC</div>
-            </div>
-            <div class="pad-row">
-                <div class="pad" data-pad="9" ondrop="dropHandler(event, 9)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(9)">9</div>
-                <div class="pad" data-pad="10" ondrop="dropHandler(event, 10)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(10)">10</div>
-                <div class="pad" data-pad="11" ondrop="dropHandler(event, 11)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(11)">11</div>
-                <div class="pad" data-pad="12" ondrop="dropHandler(event, 12)" ondragover="dragOverHandler(event)" onclick="playOrUploadSound(12)">12</div>
-                <div class="pad special" data-pad="sub-pad" ondrop="dropHandler(event, 'sub-pad')" ondragover="dragOverHandler(event)" onclick="playOrUploadSound('sub-pad')">SUB PAD</div>
-            </div>
-        </div>
-    </div>
+        <script src="script.js"></script>
+    </body>
+    </html>
     
-    
-    <!-- ... Other sections for sample, effects, etc. ... -->
-    </div>
-</div>
-
-
-<input type="file" id="upload-pad1" accept="audio/*" style="display:none;" onchange="loadSound(1, this.files)">
-<input type="file" id="upload-pad2" accept="audio/*" style="display:none;" onchange="loadSound(2, this.files)">
-
-
-<script src="script.js"></script>
-</body>
-</html>
