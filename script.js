@@ -1,3 +1,4 @@
+
 // Global AudioContext
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -13,7 +14,13 @@ var padSounds = {};
 
 // Drag and Drop Handlers
 function dragOverHandler(event) {
-  event.preventDefault();  // Prevent default behavior (Prevent file from being opened)
+ 
+// Object to keep track of the sounds for the pads
+var padSounds = {};
+
+function dragOverHandler(event) {
+ 
+
   event.target.classList.add('dragover');
 }
 
@@ -26,8 +33,13 @@ function dragLeaveHandler(event) {
 }
 
 function dropHandler(event, padNumber) {
-  event.preventDefault();
+ 
   event.target.classList.remove('dragover');
+
+
+
+  // Get the dropped file
+
   var files = event.dataTransfer.files;
   if (files.length > 0) {
     var file = files[0];
@@ -41,6 +53,7 @@ function dropHandler(event, padNumber) {
 
 function loadSound(padNumber, file) {
   var reader = new FileReader();
+
   reader.onload = function(e) {
     var audioElement = document.getElementById('pad' + padNumber + '-audio') || new Audio();
     audioElement.id = 'pad' + padNumber + '-audio';
@@ -141,3 +154,40 @@ function toggleVinylSimulationForAllPads() {
     });
   }
   
+
+
+  reader.onload = function(e) {
+    // Create or get the audio element for the pad
+    var audioElement = document.getElementById('pad' + padNumber + '-audio') || new Audio();
+    audioElement.id = 'pad' + padNumber + '-audio';
+    audioElement.src = e.target.result;
+    
+    // Store reference to the loaded sound data
+    padSounds['pad' + padNumber] = e.target.result;
+  };
+
+  reader.readAsDataURL(file); // Read the file as a Data URL
+}
+
+function playOrUploadSound(padNumber) {
+    var audioElement = document.getElementById('pad' + padNumber + '-audio');
+    var padElement = document.querySelector('.pad[data-pad="' + padNumber + '"]');
+    
+    if (padSounds['pad' + padNumber]) {
+      if (!audioElement) {
+        // Create a new Audio element if it doesn't exist
+        audioElement = new Audio(padSounds['pad' + padNumber]);
+        audioElement.id = 'pad' + padNumber + '-audio';
+        document.body.appendChild(audioElement);
+      }
+      
+      padElement.classList.add('playing');
+      audioElement.play();
+  
+      audioElement.onended = function() {
+        padElement.classList.remove('playing');
+      };
+    }
+  }
+  
+
