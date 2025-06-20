@@ -191,6 +191,8 @@ function getCurrentAudioElement() {
 // Event listeners and handlers for pitch control and keyboard interaction
 const pitchButton = document.getElementById('pitch-button');
 pitchButton.addEventListener('click', togglePitch);
+const delayButton = document.getElementById('delay-button');
+delayButton.addEventListener('click', toggleDelay);
 
 function togglePitch() {
     const pitchKnob = document.getElementById('pitch-knob');
@@ -213,6 +215,54 @@ function adjustPitch(value) {
         }
     } else {
         console.error("No audio element found.");
+    }
+}
+
+// Delay effect implementation
+function applyDelay(audioElement) {
+    if (!audioElement.delayNodes) {
+        const source = audioCtx.createMediaElementSource(audioElement);
+        const delayNode = audioCtx.createDelay();
+        delayNode.delayTime.value = 0.3;
+        const feedback = audioCtx.createGain();
+        feedback.gain.value = 0.4;
+
+        source.connect(delayNode);
+        delayNode.connect(feedback);
+        feedback.connect(delayNode);
+        delayNode.connect(audioCtx.destination);
+
+        audioElement.delayNodes = { source, delayNode, feedback };
+        audioElement.delayApplied = true;
+    } else if (!audioElement.delayApplied) {
+        audioElement.delayNodes.source.connect(audioElement.delayNodes.delayNode);
+        audioElement.delayNodes.delayNode.connect(audioElement.delayNodes.feedback);
+        audioElement.delayNodes.feedback.connect(audioElement.delayNodes.delayNode);
+        audioElement.delayNodes.delayNode.connect(audioCtx.destination);
+        audioElement.delayApplied = true;
+    }
+}
+
+function removeDelay(audioElement) {
+    if (audioElement.delayNodes && audioElement.delayApplied) {
+        audioElement.delayNodes.source.disconnect();
+        audioElement.delayNodes.delayNode.disconnect();
+        audioElement.delayNodes.feedback.disconnect();
+        audioElement.delayNodes.source.connect(audioCtx.destination);
+        audioElement.delayApplied = false;
+    }
+}
+
+function toggleDelay() {
+    const audioElement = getCurrentAudioElement();
+    if (audioElement) {
+        if (audioElement.delayApplied) {
+            removeDelay(audioElement);
+            console.log('Delay off');
+        } else {
+            applyDelay(audioElement);
+            console.log('Delay on');
+        }
     }
 }
 
